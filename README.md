@@ -36,15 +36,26 @@ https://gnjo.github.io/xyz.md,txt
  me.get('image2',type)  //return data
  me.getObject('')
 })
-me.loadTile
-me.loadImg
-me.loadBgm
-me.loadSe
-me.loadJson
-me.loadTxt
+/*
+let me={}
+me.loadTile=(url,size)=>{}
+me.loadImg=(url)=>{}
+me.loadBgm=(url)=>{}
+me.loadSe=(url)=>{}
+me.loadJson=(url)=>{
+ return fetch(url)
+ .then(d=>d.json())
+ .then(d=>{return {url:url,name:url.split('/').pop(),type:'json',data:d,str:'',base64:''} }
+}
+;
+me.loadTxt=(url)=>{
+ return fetch(url)
+ .then(d=>d.text())
+ .then(d=>{return {url:url,name:url.split('/').pop(),type:'txt',data:d,str:'',base64:''} }
+}
+;
 me.r['name'] {url,name,type,data,str,base64} //name =>xyz.png
 me.t0=performance.now();
-/*
 
 let f=(d)=>{
  function _c(d){return d.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm,'')}
@@ -52,14 +63,16 @@ let f=(d)=>{
 }
 
 Promise.resolve(f(me.str).split('\n').map(d=>{
+try{
  let a=d.split(','),type=d[1]
- if(type==='tile')return me.loadTile.bind(a[0],a[2])
+ if(type==='tile')return me.loadTile.bind(a[0],parseInt(a[2]))
  if(type==='img')return me.loadImg.bind(a[0])
  if(type==='bgm')return me.loadBgm.bind(a[0])
  if(type==='se')return me.loadSe.bind(a[0])
  if(type==='json')return me.loadJson.bind(a[0])
  if(type==='txt')return me.loadTxt.bind(a[0])
  return console.log('unkown type',d),void 0
+}catch(e){return console.log('unkown type',d),void 0}
 }).filter(d=>d))
 .then(Promise.all)
 .then(d=>{ 
