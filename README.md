@@ -17,6 +17,13 @@ t.isloaded()
 t.loadedflg=false
 t.time
 t.loading//debug
+
+function sniff(o,caller){o= new Proxy(o,{ set:(oo,k,v)=>{return caller(oo,k,v),oo[k]=v } }) }
+sniff(t,(o,k,v)=>{
+ console.log(k,v)
+ if(!(k==='loadedflg'&&v))return;
+ 
+})
 ```
 
 ```
