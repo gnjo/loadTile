@@ -44,11 +44,67 @@ https://gnjo.github.io/xyz.md,txt
  me.getObject('')
 })
 /*
+
+
+
+ function tilecalc(d,size){
+ ///
+  let f=(ctx,size)=>{
+  let oImgData = ctx.getImageData(0, 0, size, size);
+  let canvas=document.createElement('canvas')
+  canvas.width=canvas.height=size
+  let wk=canvas.getContext('2d')
+    wk.putImageData(oImgData, 0, 0);
+    return wk.canvas.toDataURL()
+ }
+ ///
+ let canvas=document.createElement('canvas')
+ canvas.width=canvas.height=size
+ let ctx=canvas.getContext('2d'),image=d,size=o.size
+ let cellw=parseInt(image.naturalWidth/size)
+ let cellh=parseInt(image.naturalHeight/size)
+ let ary=[]
+ for(let y=0;y<cellh;y++)
+  for(let x=0;x<cellw;x++){
+    ctx.drawImage(image, x*size, y*size, size, size, 0, 0, size, size);
+    let src=f(ctx,size);
+    let im=new Image();im.src=src
+    ary.push(im)
+  }
+ return ary;
+ }
+
+
+let fn={};fn.ce
 let me={}
-me.loadTile=(url,size)=>{}
-me.loadImg=(url)=>{}
-me.loadBgm=(url)=>{}
-me.loadSe=(url)=>{}
+me.loadTile=(url,size)=>{return new Promise(sol=>{
+ let d=fn.ce('img'),type='tile'
+ d.crossOrigin = "Anonymous"; 
+ d.onload=()=>{
+  let ary=tilecalc(d,size)
+  return sol({url:url,name:url.split('/').pop(),type:type,data:ary,str:'',base64:''})
+ }
+ d.src=url;
+}}
+me.loadImg=(url)=>{return new Promise(sol=>{
+ let d=fn.ce('img'),type='bgm'
+ d.crossOrigin = "Anonymous"; 
+ d.onload=()=>{return sol({url:url,name:url.split('/').pop(),type:type,data:d,str:'',base64:''})}
+ d.src=url;
+}}
+me.loadBgm=(url)=>{return new Promise(sol=>{
+ let d=fn.ce('video'),type='bgm'
+ d.crossOrigin = "Anonymous";  
+ d.onload=()=>{return sol({url:url,name:url.split('/').pop(),type:type,data:d,str:'',base64:''})}
+ d.src=url;
+}}
+me.loadSe=(url)=>{return new Promise(sol=>{
+ let d=fn.ce('video'),type='se'
+  d.crossOrigin = "Anonymous"; 
+
+ d.onload=()=>{return sol({url:url,name:url.split('/').pop(),type:type,data:d,str:'',base64:''})}
+ d.src=url;
+}}
 me.loadJson=(url)=>{
  return fetch(url)
  .then(d=>d.json())
