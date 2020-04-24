@@ -8,7 +8,9 @@ https://gnjo.github.io/image4.png //t['image4'][0] //one only
 
 `,caller);
 function caller(me){
-
+ let ary=me['image2']
+ ary.map(el=>{ document.body.appendChild(el) }
+ console.log(me.time,me.loadedflg)
 }
 t.isis(key)
 t.isloaded()
