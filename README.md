@@ -43,11 +43,15 @@ me.loadSe
 me.loadJson
 me.loadTxt
 me.r['name'] {url,name,type,data,str,base64} //name =>xyz.png
-me.pary=[]
 me.t0=performance.now();
 /*
 
-Promise.resolve(me.str.split('\n').map(d=>{
+let f=(d)=>{
+ function _c(d){return d.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm,'')}
+ return _c(d.trim())
+}
+
+Promise.resolve(f(me.str).split('\n').map(d=>{
  let a=d.split(','),type=d[1]
  if(type==='tile')return me.loadTile.bind(a[0],a[2])
  if(type==='img')return me.loadImg.bind(a[0])
